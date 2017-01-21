@@ -21,7 +21,7 @@ function sendMail(req) {
         body: {
             personalizations: [{
                 to: [{email: req.body.address}],
-                subject: 'MagicFlute notification'
+                subject: req.body.subject
             }],
             from: {email: SENDGRID_SENDER},
             content: [{
@@ -37,12 +37,12 @@ function sendMail(req) {
             return;
         }
         logger.info("*** email sent, response code: ", response.statusCode);
-        storeEmail(req);
+        storeEmail(req, response.statusCode);
     });
 
 }
 
-function storeEmail(req) {
+function storeEmail(req, statusCode) {
 
     // The kind for the new entity
     const kind = 'emails';
@@ -57,13 +57,15 @@ function storeEmail(req) {
         data: {
             address: req.body.address,
             date: new Date(),
+            subject: req.body.subject,
             ip: req.ip,
-            host: req.hostname
+            host: req.hostname,
+            statusCode: statusCode
         }
     };
     datastore.save(task)
         .then(() => {
-            logger.info(`Saved ${task.key}: ${task.data.address}`);
+            logger.info(`*** saved: email to ${task.data.address}, subject: ${task.data.subject}`);
         })
         .catch((e) => {
             logger.error("*** error storing email meta data: ", e)

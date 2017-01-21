@@ -36,6 +36,6 @@ app.get('/', (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-    logger.info(`*********** PID ${process.pid} listening on port ${PORT}`);
+    logger.info(`*** PID ${process.pid} listening on port ${PORT}`);
 });
 // [END app]
