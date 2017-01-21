@@ -12,7 +12,7 @@ router.get('/test', function (req, res, next) {
 
 router.post('/notify', (req, res, next)=>{
     let reply = JSON.stringify(req.body, null, 2);
-    sendMail("first from flengine via appengine", req.body.message)
+    sendMail(req)
     res.send(`this was received:
  address to be used: ${req.body.address}
  message to be sent: ${req.body.message}`);
