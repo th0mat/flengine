@@ -33,7 +33,8 @@ function sendMail(req) {
 
     Sendgrid.API(request, function (error, response) {
         if (error) {
-            logger.error("*** error from sendMail/sg.API: ", error);
+            logger.error("*** error from sendMail/sg.API: ", error.response);
+            storeEmail(req, error.response.statusCode);
             return;
         }
         logger.info("*** email sent, response code: ", response.statusCode);
@@ -43,6 +44,11 @@ function sendMail(req) {
 }
 
 function storeEmail(req, statusCode) {
+
+    let ip = req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress;
 
     // The kind for the new entity
     const kind = 'emails';
@@ -58,8 +64,7 @@ function storeEmail(req, statusCode) {
             address: req.body.address,
             date: new Date(),
             subject: req.body.subject,
-            ip: req.ip,
-            host: req.hostname,
+            ip: ip,
             statusCode: statusCode
         }
     };
