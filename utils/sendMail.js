@@ -8,12 +8,11 @@ const datastore = Datastore({
 
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-const SENDGRID_SENDER = process.env.SENDGRID_SENDER;
+const SENDGRID_SENDER = "flute@packetmozart.com";
 const Sendgrid = require('sendgrid')(SENDGRID_API_KEY);
 
 
 function sendMail(req) {
-    logger.info("*** entered mailing function");
 
     const request = Sendgrid.emptyRequest({
         method: 'POST',
