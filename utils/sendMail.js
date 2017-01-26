@@ -53,7 +53,6 @@ function storeEmail(req, statusCode) {
     const kind = 'emails';
 
     // The Cloud Datastore key for the new entity
-    const name = 'sample_1'
     const taskKey = datastore.key(kind);
 
     // Prepares the new entity
