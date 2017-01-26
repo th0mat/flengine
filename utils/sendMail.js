@@ -8,7 +8,7 @@ const datastore = Datastore({
 
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-const SENDGRID_SENDER = "flute@packetmozart.com";
+const SENDGRID_SENDER = "MagicFlute@packetmozart.com";
 const Sendgrid = require('sendgrid')(SENDGRID_API_KEY);
 
 
@@ -60,10 +60,12 @@ function storeEmail(req, statusCode) {
     const task = {
         key: taskKey,
         data: {
-            address: req.body.address,
             date: new Date(),
-            subject: req.body.subject,
+            mfuid: new Buffer(req.body.mfuid, 'base64').toString(),
+            version: req.body.version,
+            address: req.body.address,
             ip: ip,
+            subject: req.body.subject,
             statusCode: statusCode
         }
     };
