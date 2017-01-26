@@ -3,7 +3,7 @@ const logger = require('../utils/logger');
 const router = express.Router();
 const sendMail = require('../utils/sendMail').sendMail;
 const registerMfuid = require('../utils/registerMfuid').registerMfuid;
-
+const sendMozartMsg = require('../utils/sendMozartMsg').sendMozartMsg;
 
 
 router.get('/test', function (req, res, next) {
@@ -23,7 +23,9 @@ router.post('/mfuidreg', (req, res, next)=>{
     res.sendStatus(200);
 })
 
-
+router.post('/fetchMsg', (req, res, next)=>{
+    sendMozartMsg(req, res)
+})
 
 module.exports = {
     "router": router
