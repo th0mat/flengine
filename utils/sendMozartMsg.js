@@ -1,8 +1,6 @@
 const logger = require('./logger');
 
 
-
-
 function sendMozartMsg(req, res) {
 
     let version = req.body.version;
@@ -11,9 +9,13 @@ function sendMozartMsg(req, res) {
     res
         .status(200)
         .send({
-        msg: `you are still on version ${version}, shocking`,
-        body: `you are registerd under the following id: ${mfuid}`
-    })
+            dashboardTip: {
+                title: "Tool tip",
+                text: `upgrade from version ${version}`,
+                link: `https:www.packetmozart.com`
+            },
+            otherField: 'not yet used'
+        })
 }
 
 
